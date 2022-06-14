@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Currículo</title>
+</head>
+<body>
+
+    <header>
+        <h1 id="nome"></h1>
+        <h2 id="titulo"></h2>
+
+        <p> 
+            <span id="nacionalidade"></span>  <br/> 
+            <span id="idade"> </span> <br/> 
+            <span id="estado"></span>  <br/> 
+            <a href="mailto:gabrielcarneiro@sou.inteli.edu.br" target="_blank"><span id="contato"></span></a>
+
+            <button class="btnn" onclick="loadData()">Carregar informações</button>
+        </p>
+    </header>
+    
+    <div id="infos">
+        <div id="experiencia-profissional">
+            <div class="row">
+                <h1>Experiência Profissional</h1> <button class="btn" onclick="showExperience()"><img src="./assets/Expand.svg" alt=""></button>
+            </div>
+            <div id="expContent" class="hiddenExpContent">
+                <h2>Trabalho Freelancer com mídias sociais (2020 - momento)</h2>
+                <p>Produção de conteúdo váriado</p>
+            </div>
+        </div>
+
+        <div id="formacao">
+            <div class="row">
+                <h1>Formação Acadêmica</h1> <button class="btn" onclick="showStudies()"><img src="./assets/Expand.svg" alt=""></button>
+            </div>
+            <div id="studiesContent" class="hiddenStContent" >
+                <h2>Ciência da Computação</h2>
+                <p>Bacharelado em Ciência da Computação pelo Instituto de Tecnologia e Liderança (INTELI) (2022-2025)</p>
+                <h2>Colégio Torricelli</h2>
+                <p>Ensino Médio (2019-2021)</p>
+            </div>
+        </div>
+
+        <div id="idiomas">
+            <div class="row">
+                <h1>Idiomas</h1> <button class="btn" onclick="showLanguages()"><img src="./assets/Expand.svg" alt=""></button>
+            </div>
+            <div id="langContent" class="hiddenLangContent">
+                <button style="margin: 10px 0px;" onclick="addLangInput()">Adicionar Idioma</button>
+                <p>Inglês (Avançado)</p>
+                <p>Espanhol (Básico)</p>
+            </div>
+        </div>
+        <div id="contato">
+            <h1>Entre em contato</h1>
+            <form action="/contato" id="contact-form" method="post">
+                <input type="text" name="nome" id="nomeForms" placeholder="Digite seu nome"> <br>
+                <input type="text" name="fone" id="fone" placeholder="Digite seu telefone"><br>
+                <input type="text" name="email" id="email" placeholder="Digite seu email"> <br>
+                <textarea name="texto" id="texto" cols="45" rows="10" placeholder="Escreva aqui, sua mensagem"></textarea> <br>
+                <input onclick="sendMessage()" type="submit" value="Enviar">
+            </form>
+        </div>
+    </div>
+
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
