@@ -1,11 +1,11 @@
-const express = require('express'); 
+const express = require('express');
 const port = 3001
-const bodyParser = require('body-parser'); 
+const bodyParser = require('body-parser');
 
 const nodemailer = require('nodemailer');
 const SMTP_CONFIG = require('./.env')
 
-const app = express(); 
+const app = express();
 const cors = require('cors');
 
 const sqlite = require('sqlite');
@@ -21,22 +21,22 @@ app.use(express.json());
 app.post('/contato', (req, res) => {
 
 	const { nome, fone, email, texto } = req.body
- 
+
 	async function sendEmail() {
 		var transport = nodemailer.createTransport({
-			host: SMTP_CONFIG.host,
-			port: SMTP_CONFIG.port,
+			host: "smtp.mailtrap.io",
+			port: 2525,
 			auth: {
-			  user: SMTP_CONFIG.auth.user,
-			  pass: SMTP_CONFIG.auth.pass,
-			}
-		  });
+				user: "3bd88ad5bf672a",
+				pass: "7409f3bfdb6c2d"
+			},
+		});
 
 		let sendMessage = await transport.sendMail({
-			text: texto, 
-			subject: `${nome} - Curriculo`, 
+			text: texto,
+			subject: `${nome} - Curriculo`,
 			from: `${nome} - ${fone} <${email}>`,
-			to: SMTP_CONFIG.to, 
+			to: 'gabriel.carneiro@sou.inteli.edu.br'
 		})
 
 
@@ -51,7 +51,7 @@ app.put('/editLang', (req, res) => {
 	let langLevel = language.split(' ')
 
 	async function insertDB() {
-		const db = await sqlite.open({ filename: './curriculoDatabase.db', driver: sqlite3.Database})
+		const db = await sqlite.open({ filename: './curriculoDatabase.db', driver: sqlite3.Database })
 
 		await db.run(`INSERT INTO idiomas (idioma, nivel) VALUES (?, ?)`, [langLevel[0], langLevel[1]])
 		const idiomas = await db.all('SELECT * FROM idiomas');
@@ -65,22 +65,22 @@ app.put('/editLang', (req, res) => {
 
 app.get('/dados', (req, res) => {
 	async function insertDB() {
-		let db = await sqlite.open({ filename: './curriculoDatabase.db', driver: sqlite3.Database});
+		let db = await sqlite.open({ filename: './curriculoDatabase.db', driver: sqlite3.Database });
 
 		const dados = await db.get('SELECT * FROM dados');
-		
+
 		res.json(dados)
 		db.close();
 	}
-	
+
 	insertDB();
-}); 
+});
 
 app.delete('/deleteLang', (req, res) => {
 	const { id } = req.body
 
 	async function deleteDB() {
-		const db = await sqlite.open({ filename: './curriculoDatabase.db', driver: sqlite3.Database})
+		const db = await sqlite.open({ filename: './curriculoDatabase.db', driver: sqlite3.Database })
 		await db.run(`DELETE FROM idiomas WHERE id = ${id}`)
 		const idiomas = await db.all('SELECT * FROM idiomas');
 		res.status(200).send(idiomas)
@@ -89,7 +89,7 @@ app.delete('/deleteLang', (req, res) => {
 	}
 
 	deleteDB()
-}) 
+})
 
 app.listen(port, () => {
 	console.log(`Server running at http://localhost:${port}`);
